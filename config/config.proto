@@ -1,0 +1,53 @@
+syntax = "proto2";
+
+package config;
+
+message Camera {
+    required string cam_url = 1;
+    required string cam_user = 2;
+    required string cam_pwd = 3;
+    required bool cam_is_active = 4;
+    required string cam_model = 5;
+    optional int32 cam_frame_period = 6 [default = 1000];
+    optional int32 cam_prio = 7 [default = 1];
+    repeated string cam_roi = 8;
+    required string cam_group = 9;
+    required string cam_name = 10;
+    optional int32 cam_frame_height = 11 [default = 1080];
+    optional int32 cam_frame_width = 12 [default = 1920];
+}
+
+message CamerasList {
+    repeated Camera cam = 1; 
+}
+
+message MotionDetectorParams {
+    required int32 movdet_color_tresh = 1;
+    required int32 movdet_diff_tresh = 2;
+    optional int32 movdet_timer_period = 3 [default = 30];
+}
+
+message Event{
+    required int32 class_num = 1;
+    required string class_name = 2;
+    optional int32 class_main_timer = 3 [default = 30];
+    optional int32 class_sub_timer = 4 [default = 120];
+}
+
+message EventHandlerParams {
+    repeated Event event = 1;
+}
+
+message NNParams {
+    required float conf_thresh = 1;
+    required float nms_thresh = 2;
+}
+
+message Config {
+    required CamerasList cam_list = 1;
+    required string server_ip = 2;
+    required MotionDetectorParams movdet_params = 3;
+    required EventHandlerParams eh_params = 4;
+    required NNParams nn_params = 5;
+}
+
